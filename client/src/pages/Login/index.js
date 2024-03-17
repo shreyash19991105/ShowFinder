@@ -1,15 +1,34 @@
-import { Form } from "antd";
+import { Form, message } from "antd";
 import React from "react";
 import Button from "../../components/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { LoginUser } from "../../apicalls/users";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    try {
+      const response = await LoginUser(values);
+      if (response.success) {
+        message.success(response.message);
+        console.log(response.message);
+        localStorage.setItem("token", response.data);
+        navigate("/");
+      } else {
+        message.error(response.message);
+        console.log(response.message);
+      }
+    } catch (error) {
+      message.error(error);
+    }
+  };
   return (
     <div className="flex justify-center h-screen items-center bg-primary">
       <div className="flex-col items-center justify-center card p-3 ">
         <h1 className="text-xl mb-1">Welcome Back ! Login to ShowFinder</h1>
         <hr />
-        <Form layout="vertical" className="mt-1">
+        <Form layout="vertical" className="mt-1" onFinish={onFinish}>
           <Form.Item
             label="Email"
             name="email"
@@ -26,7 +45,7 @@ const Login = () => {
           </Form.Item>
 
           <div className="flex flex-col mt-2 gap-1">
-            <Button fullWidth title="REGISTER" type="submit" />
+            <Button fullWidth title="LOGIN" type="submit" />
             <div>
               New to ShowFinder?
               <Link to="/register" className="text-primary">
