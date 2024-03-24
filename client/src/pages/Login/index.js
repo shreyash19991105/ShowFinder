@@ -1,5 +1,5 @@
 import { Form, message } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../../components/button";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../apicalls/users";
@@ -23,6 +23,12 @@ const Login = () => {
       message.error(error);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+     navigate('/');
+    } 
+  }, []);
   return (
     <div className="flex justify-center h-screen items-center bg-primary">
       <div className="flex-col items-center justify-center card p-3 ">

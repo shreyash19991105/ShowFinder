@@ -2,6 +2,7 @@ import { Form, message } from "antd";
 import Button from "../../components/button";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../../apicalls/users";
+import { useEffect } from "react";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Register = () => {
       if (response.success) {
         message.success(response.message);
         console.log(response.message);
-        navigate('/login')
+        navigate("/login");
       } else {
         message.error(response.message);
         console.log(response.message);
@@ -20,6 +21,13 @@ const Register = () => {
       message.error(error);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
+  
   return (
     <div className="flex justify-center h-screen items-center bg-primary">
       <div className="flex-col items-center justify-center card p-3 ">
