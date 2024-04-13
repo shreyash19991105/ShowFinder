@@ -3,9 +3,7 @@ import React from "react";
 import PageTitle from "../../components/PageTitle";
 import MoviesList from "./MoviesList";
 import TheatersList from "./TheatersList";
-//added a comment
-//added a second comment
-//added third comment
+
 const Admin = () => {
   return (
     <div>
